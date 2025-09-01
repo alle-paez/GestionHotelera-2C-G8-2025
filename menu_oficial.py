@@ -16,7 +16,7 @@ def llenar_habitaciones(matriz):
 
         numero= int(input("Ingrese el número de habitación: "))
 
-def espaciado(largo, cadena, alineacion):
+"""def espaciado(largo, cadena, alineacion):
     cadena = str(cadena)
     largo_cadena = len(cadena)
     espacios_extra = largo - largo_cadena
@@ -29,7 +29,7 @@ def espaciado(largo, cadena, alineacion):
     elif alineacion == "d":
         return " " * espacios_extra + cadena + "|"
     else:
-        return cadena + "|"
+        return cadena + "|"""
 
 def print_habitaciones(matriz):
     print("Número    |Precio    |Tipo      |Capacidad |Estado    |")
@@ -57,7 +57,7 @@ def print_clientes(m):
     print("Dni	Nombre	Apellido	Teléfono	Mail")
     for i in range(len(m)):
         for j in range(len(m[i])):
-            print(espaciado(10,m[i][j], "i"), end = "")
+            print(f'{m[i][j]}'.center(10," "), end = "")
         print()
 
 def llenar_reservas(matriz):
@@ -82,7 +82,7 @@ def print_reservas(matriz):
         print()
     return matriz
 
-def ubicar(matriz, item):
+def ubicar(matriz, item): #ESTO O BUBBLE? O CUÁL?
     flag=0
     i=0
     pos=-1
@@ -91,8 +91,8 @@ def ubicar(matriz, item):
             flag=1
             pos=i
         i+=1
-        if i==len():
-            flag=-1
+        if i==len(matriz):
+            flag=1
     return pos
 
 #menú
@@ -114,12 +114,15 @@ while opcion!=-1:
         opcion_habitaciones=int(input("Ingrese numéricamente la opción deseada: "))
 
         while opcion_habitaciones!=-1:
-            if opcion_habitaciones==1:
+            if opcion_habitaciones==1:#AGREGAR HABITACIONES
                 llenar_habitaciones(habitaciones)
-            elif opcion_habitaciones==2:
+                #AGREGAR CHECKEOS
+            elif opcion_habitaciones==2: #MODIFICAR HABITACIONES
+                #LO ESTÁ HACIENDO FACU
                 print_habitaciones(habitaciones)
                 item=input(int("Ingrese el número de habitación que quiera modificar: "))
-            elif opcion_habitaciones==3:
+            elif opcion_habitaciones==3: #ELIMINAR HABITACIONES
+                #AGREGAR UN DESHACER¿
                 print_habitaciones(habitaciones)
                 item=int(input("Ingrese el número de habitación que quiera eliminar: "))
                 pos=ubicar(habitaciones, item)
@@ -131,12 +134,12 @@ while opcion!=-1:
                         flag=int(input("Si quiere eliminar otra habitación ingrese 1, si no ingrese 0: "))
                         pos=-1
                     else:
-                        item=int(input("La habitación ingresada no existe, intente de nuevo: "))
+                        print("La habitación ingresada no existe, intente de nuevo")
 
                     if flag==1:
                         item=int(input("Ingrese el número de habitación que quiera eliminar: "))
-                        pos=ubicar(habitaciones, item)
-            elif opcion_habitaciones==4:
+                        pos=ubicar(habitaciones, item) #HACER UN CKECK ANTES PARA QUE NO SE CUELGUE SI SON MUCHOS ELEMENTOS¿
+            elif opcion_habitaciones==4:#VER HABITACIONES
                 print_habitaciones(habitaciones)
             
             print(f'\
@@ -158,21 +161,21 @@ Volver para atrás con -1')
 
         while opcion_reservas!=-1:
 
-            if opcion_reservas==1:
+            if opcion_reservas==1: #AGREGAR RESERVA
                 llenar_reservas(reservas)
-            elif opcion_reservas==2:
+            elif opcion_reservas==2: #MODIFICAR RESERVA
                 pass
-            elif opcion_reservas==3:
+            elif opcion_reservas==3: # CANCELAR RESERVA
                 pass
-            elif opcion_reservas==4:
+            elif opcion_reservas==4: #VER RESERVAS
                 print_reservas(reservas)
             
-            print("" \
-            "1-Agregar reserva" , "\n", \
-            "2-Modificar reserva" , "\n",\
-            "3-Cancelar reserva" , "\n",\
-            "4-Ver reservas" , "\n",\
-            "Volver para atrás con -1")
+            print(f'\
+1-Agregar reserva\n\
+2-Modificar reserva\n\
+3-Cancelar reserva\n\
+4-Ver reservas\n\
+Volver para atrás con -1')
             opcion_reservas=int(input("Ingrese numéricamente la opción deseada: "))
 
     print("" "\n",
