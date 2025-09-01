@@ -1,30 +1,6 @@
 import random
-# Clientes titulares
-clientes = [
-    [30555999, "Juan", "Pérez", "1123456789", "juan.perez@email.com"],
-    [28444888, "María", "Gómez", "1167894321", "maria.gomez@email.com"],
-    [33222111, "Lucas", "Martínez", "1134567890", "lucas.martinez@email.com"],
-    [29888777, "Sofía", "López", "1145678901", "sofia.lopez@email.com"],
-    [31222333, "Martín", "Díaz", "1178901234", "martin.diaz@email.com"]
-]
-
-# Habitaciones
-habitaciones = [
-    [101, 15000, "Doble", 2, "Disponible"],
-    [102, 20000, "Triple", 3, "Ocupada"],
-    [103, 18000, "Doble", 2, "Mantenimiento"],
-    [104, 25000, "Suite", 4, "Disponible"],
-    [105, 12000, "Single", 1, "Disponible"]
-]
-
-# Reservas
-reservas = [
-    [1, 30555999, 2, "2025-08-15", "2025-08-20", 0, 75000],
-    [2, 28444888, 3, "2025-08-18", "2025-08-25", 10, 126000],
-    [3, 33222111, 2, "2025-09-01", "2025-09-05", 0, 72000],
-    [4, 29888777, 4, "2025-08-10", "2025-08-15", 15, 106250],
-    [5, 31222333, 1, "2025-08-22", "2025-08-24", 5, 22800]
-]
+import menu
+from menu import *
 
 def llenar_habitaciones(matriz):
 
@@ -59,7 +35,7 @@ def print_habitaciones(matriz):
     print("Número    |Precio    |Tipo      |Capacidad |Estado    |")
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
-            print(f'(matriz[i][j])'.center(10), end="")
+            print(f'{matriz[i][j]} '.center(10," "), end="")
         print()
     return matriz
 
@@ -102,11 +78,22 @@ def print_reservas(matriz):
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             #print(espaciado(10, matriz[i][j], "i"), end="")
-            print(f'{matriz[i][j]}'.center(10,0), end='')
+            print(f'{matriz[i][j]}'.center(10," "), end='')
         print()
     return matriz
 
-
+def ubicar(matriz, item):
+    flag=0
+    i=0
+    pos=-1
+    while flag!=1:
+        if matriz[i][0]==item:
+            flag=1
+            pos=i
+        i+=1
+        if i==len():
+            flag=-1
+    return pos
 
 #menú
 print("----Sistema de Gestión Hotelera----")
@@ -130,18 +117,34 @@ while opcion!=-1:
             if opcion_habitaciones==1:
                 llenar_habitaciones(habitaciones)
             elif opcion_habitaciones==2:
-                pass
+                print_habitaciones(habitaciones)
+                item=input(int("Ingrese el número de habitación que quiera modificar: "))
             elif opcion_habitaciones==3:
-                pass
-            elif opcion_habitaciones:
+                print_habitaciones(habitaciones)
+                item=int(input("Ingrese el número de habitación que quiera eliminar: "))
+                pos=ubicar(habitaciones, item)
+                flag=1
+                while flag==1:
+                    if pos!=-1:
+                        del(habitaciones[pos])
+                        print(f'\nLa habitación {item} ha sido eliminada con éxito\n')
+                        flag=int(input("Si quiere eliminar otra habitación ingrese 1, si no ingrese 0: "))
+                        pos=-1
+                    else:
+                        item=int(input("La habitación ingresada no existe, intente de nuevo: "))
+
+                    if flag==1:
+                        item=int(input("Ingrese el número de habitación que quiera eliminar: "))
+                        pos=ubicar(habitaciones, item)
+            elif opcion_habitaciones==4:
                 print_habitaciones(habitaciones)
             
-            print("" \
-            "1-Agregar habitación" , "\n", \
-            "2-Modificar habitación" , "\n",\
-            "3-Borrar habitación" , "\n",\
-            "4-Ver habitaciones", "\n",\
-            "Volver para atrás con -1")
+            print(f'\
+1-Agregar habitación\n\
+2-Modificar habitación\n\
+3-Borrar habitación\n\
+4-Ver habitaciones\n\
+Volver para atrás con -1')
             opcion_habitaciones=int(input("Ingrese numéricamente la opción deseada: "))
 
     elif opcion==2:
@@ -155,7 +158,6 @@ while opcion!=-1:
 
         while opcion_reservas!=-1:
 
-            llenar_reservas(reservas)
             if opcion_reservas==1:
                 llenar_reservas(reservas)
             elif opcion_reservas==2:
