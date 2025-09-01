@@ -38,3 +38,4 @@ def alta_clientes(clientes):
             dni_cliente = int(input("Ingrese el dni del cliente: (-1 para salir) "))
 
 
+
