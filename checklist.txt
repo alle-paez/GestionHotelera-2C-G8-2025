@@ -1,0 +1,8 @@
+-Login (con dos usuarios, un empleado y un cliente)
+-LAMDA
+-Expresiones regulares
+-Completar crud
+-Estadísticas
+-Separar en clientes, reservas, habitaciones, estadísticas, menú, login¿
+-Bajas lógicas, no literla borrar
+-agregar campo de baja lógica a todas las tablas

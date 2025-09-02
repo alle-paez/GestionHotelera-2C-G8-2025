@@ -229,7 +229,7 @@ def print_reservas(matriz):
 
 
 
-#menú
+"""#menú
 print("----Sistema de Gestión Hotelera----")
 print("" "\n",
 "1-Gestionar habitaciones", "\n", \
@@ -301,6 +301,6 @@ while opcion!=-1:
     "2-Reservas", "\n", \
     "Salir del programa con -1")
     opcion=int(input("Ingrese numéricamente la opción deseada: "))
-
+"""
 
 

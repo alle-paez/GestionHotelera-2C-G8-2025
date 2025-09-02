@@ -1,88 +1,10 @@
-import random
-import menu
-from menu import *
+from listas_codeadas import *
+from clientes import *
+from habitaciones import *
+from reservas import *
+from login import *
 
-def llenar_habitaciones(matriz):
-
-    numero= int(input("Ingrese el número de habitación: "))
-    while numero!=-1:
-        
-        precio=	int(input("Ingrese el precio: "))
-        tipo=input("Ingrese el tipo de habitación: ")
-        capacidad=int(input("Ingrese la capacidad de habitación: "))
-        estado=input("Ingrese el estado de la habitación: ")
-
-        matriz.append([numero, precio, tipo, capacidad, estado])
-
-        numero= int(input("Ingrese el número de habitación: "))
-
-"""def espaciado(largo, cadena, alineacion):
-    cadena = str(cadena)
-    largo_cadena = len(cadena)
-    espacios_extra = largo - largo_cadena
-
-    if espacios_extra < 0:
-        espacios_extra = 0 
-
-    if alineacion == "i":
-        return cadena + " " * espacios_extra + "|"
-    elif alineacion == "d":
-        return " " * espacios_extra + cadena + "|"
-    else:
-        return cadena + "|"""
-
-def print_habitaciones(matriz):
-    print("Número    |Precio    |Tipo      |Capacidad |Estado    |")
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            print(f'{matriz[i][j]} '.center(10," "), end="")
-        print()
-    return matriz
-
-def crear_matriz(n,m):
-    return [[0]*m for fil in range(n)]
-
-def llenar_clientes(m):
-    dni = int(input("Ingrese el Dni del cliente: (-1 para finalizar la carga:)"))
-    while dni != -1: 
-        nombre = input("Ingrese el nombre del cliente: ")
-        apellido = input("Ingrese el apellido del cliente: ")
-        telefono = input("Ingrese el telefono del cliente: ")
-        mail = input("Ingrese el e-mail del cliente: ")
-        m.append([dni,nombre,apellido,telefono,mail])
-
-        dni = int(input("Ingrese el Dni del cliente: (-1 para finalizar la carga:)"))        
-
-def print_clientes(m):
-    print("Dni	Nombre	Apellido	Teléfono	Mail")
-    for i in range(len(m)):
-        for j in range(len(m[i])):
-            print(f'{m[i][j]}'.center(10," "), end = "")
-        print()
-
-def llenar_reservas(matriz):
-    nro_reserva = int(input("Ingrese el número de reserva (-1 para salir): "))
-    while nro_reserva != -1:
-        dni = int(input("Ingrese el DNI: "))
-        cant_pax = int(input("Ingrese la cantidad de pasajeros: "))
-        fecha_desde = input("Ingrese fecha inicio (AAAA-MM-DD): ")
-        fecha_hasta = input("Ingrese fecha final (AAAA-MM-DD): ")
-        total = int(input("Ingrese el total: "))
-
-        matriz.append([nro_reserva, dni, cant_pax, fecha_desde, fecha_hasta, total])
-
-        nro_reserva = int(input("Ingrese el número de reserva (-1 para salir): "))
-
-def print_reservas(matriz):
-    print("NroReserva|DNI       |Pax       |Desde     |Hasta     |Total     |")
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            #print(espaciado(10, matriz[i][j], "i"), end="")
-            print(f'{matriz[i][j]}'.center(10," "), end='')
-        print()
-    return matriz
-
-def ubicar(matriz, item): #ESTO O BUBBLE? O CUÁL?
+def ubicar(matriz, item): #INDEX
     flag=0
     i=0
     pos=-1
@@ -178,8 +100,8 @@ Volver para atrás con -1')
 Volver para atrás con -1')
             opcion_reservas=int(input("Ingrese numéricamente la opción deseada: "))
 
-    print("" "\n",
-    "1-Gestionar habitaciones", "\n", \
-    "2-Reservas", "\n", \
-    "Salir del programa con -1")
+    print(f'\n\
+1-Gestionar habitaciones\n\
+2-Reservas\n\
+Salir del programa con -1')
     opcion=int(input("Ingrese numéricamente la opción deseada: "))

@@ -107,10 +107,21 @@ def print_reservas(matriz):
         print()
     return matriz
 
-
+def ubicar(matriz, item): #ESTO O BUBBLE? O CUÁL?
+    flag=0
+    i=0
+    pos=-1
+    while flag!=1:
+        if matriz[i][0]==item:
+            flag=1
+            pos=i
+        i+=1
+        if i==len(matriz):
+            flag=1
+    return pos
 
 #menú
-print("----Sistema de Gestión Hotelera----")
+"""print("----Sistema de Gestión Hotelera----")
 print("" "\n",
 "1-Gestionar habitaciones", "\n", \
 "2-Reservas", "\n", \
@@ -177,6 +188,4 @@ while opcion!=-1:
     "2-Reservas", "\n", \
     "Salir del programa con -1")
     opcion=int(input("Ingrese numéricamente la opción deseada: "))
-
-
-
+"""
