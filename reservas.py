@@ -1,4 +1,5 @@
 from listas_codeadas import *
+from clientes import *
 import re
 
 """Lista para hacer: 
@@ -13,6 +14,10 @@ reservas = [
     - Validar si existe el cliente, si no, crearlo.
     - Validar si la habitacion solicitada no esta ocupada en la fecha seleccionada.
     - falta el precio por noche, tiene que estar cargado en la lista habitaciones.
+    - Reordenar reservas. 
+    - verificacion de cantidad de pasajeros. Se pueden 2 mas maximo de la capacidad de la habitacion, con adicional. 
+    - verificar en la tabla reservas que no exista otra reserva para la fecha ingresada en el dto engresado. 
+    
      """
 
 #Validaciones de fecha ----------------------------------------------------------------------------------------
@@ -89,21 +94,46 @@ def verificar_formato(dni):
     else: 
         return False
 
+def buscar_cliente(matriz_clientes, dni):
+    existe = False
+    for i in range(len(matriz_clientes)):
+        if matriz_clientes[i][0] == dni:
+            existe = True
+        if not existe:
+            print("El cliente ingresado no existe en nuestra base de datos. \n Por favor, ingrese los siguientes datos: ")
+            llenar_clientes_desde_reservas(matriz_clientes, dni)
+            existe = True
+
+def llenar_clientes_desde_reservas(matriz_clientes, dni):
+        nombre = input("Ingrese el nombre del cliente: ")
+        apellido = input("Ingrese el apellido del cliente: ")
+        telefono = input("Ingrese el telefono del cliente: ")
+        mail = input("Ingrese el e-mail del cliente: ")
+        matriz_clientes.append([dni,nombre,apellido,telefono,mail])
+        print("Finalizo la carga, prosiguiendo con la reserva. ")
+
 
 #LLENAR RESERVAS ---------------------------------------------------------------------------------------------
-def llenar_reservas(matriz):
-    nro_dni= int(input("Ingrese el número de dni del cliente: (-1 para salir): "))
-    
-    while nro_dni != -1:
-        nro_dni_str = str(nro_dni)
-        ver_dni = verificar_formato(nro_dni_str)
+def llenar_reservas(matriz_reservas= reservas, matriz_clientes= clientes, matriz_habitaciones= habitaciones):
+    nro_dni= input("Ingrese el número de dni del cliente: (-1 para salir): ")
+    ver_dni = verificar_formato(nro_dni)
+    while not ver_dni:
+        print("Se ingreso un dni Invalido.")
+        nro_dni= input("Ingrese el número de dni del cliente: (-1 para salir): ")
+        ver_dni = verificar_formato(nro_dni)
+
+    while int(nro_dni) != -1:
+    #Validación ----------------------------------------------
+        ver_dni = verificar_formato(nro_dni)
         while not ver_dni:
             print("Se ingreso un dni Invalido.")
-            nro_dni= int(input("Ingrese el número de dni del cliente: (-1 para salir): "))
-            nro_dni_str = str(nro_dni)
-            ver_dni = verificar_formato(nro_dni_str)
-
+            nro_dni= input("Ingrese el número de dni del cliente: (-1 para salir): ")
+            ver_dni = verificar_formato(nro_dni)
+        nro_dni = int(nro_dni)
+    #Busqueda en clientes ------------------------------------
+        buscar_cliente(matriz_clientes, nro_dni)
         cant_pax = int(input("Ingrese la cantidad de pasajeros: "))
+
     #check-in y check-out -------------------------------------------
         check_in = pedir_fecha("Ingrese fecha inicio (AAAA-MM-DD): ")
         check_out = pedir_fecha("Ingrese fecha final (AAAA-MM-DD): ")
@@ -123,7 +153,7 @@ def llenar_reservas(matriz):
                 pass 
 
         total = int(input("Ingrese el total: "))
-        nro_reserva = len(matriz) + 1
+        nro_reserva = len(matriz_reservas) + 1
 
 
 def print_reservas(matriz):
