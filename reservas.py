@@ -1,5 +1,4 @@
 from listas_codeadas import *
-from datetime import datetime
 import re
 
 """Lista para hacer: 
@@ -16,56 +15,100 @@ reservas = [
     - falta el precio por noche, tiene que estar cargado en la lista habitaciones.
      """
 
-def definir_fechas(fecha_ingresada):
-     fecha = datetime.strptime(fecha_ingresada, "%Y-%m-%d").date()
-     return fecha
 
 def verificar_formato_fecha(fecha):
     formato = r"^\d{4}-\d{2}-\d{2}$"
     if re.match(formato, fecha):
-        return 0
+        return True
     else:
-        return 1
+        return False
         
+def separar_en_lista(fecha):
+    matriz_fecha = fecha.split('-')
+    anio = int(matriz_fecha[0])
+    mes = int(matriz_fecha[1])
+    dia = int(matriz_fecha[2])
+    return [anio, mes, dia]
+
+def bisiesto(anio):
+    return((anio % 4 == 0 and anio % 100 != 0) or (anio % 400 == 0))
+
+def verificar_ingresos_fecha(fecha):
+    if fecha[1] < 1 or fecha[1] > 12:
+        return False
+
+
+    if fecha[2] < 1 or fecha[2] > dias_en_mes(fecha[0], fecha[1]):
+        return False
+    
+    return True
+    
+def verificar_egreso(check_in, check_out):
+    if tuple(check_out) <= tuple(check_in):
+        return False 
+    else: 
+        return True
+
+def pedir_fecha(mensaje):
+    valido = False
+    while not valido:
+        fecha_str = input(mensaje)
+        if verificar_formato_fecha(fecha_str):
+            fecha = separar_en_lista(fecha_str)
+            if verificar_ingresos_fecha(fecha):
+                valido = True
+            else:
+                print("La fecha no existe, vuelva a intentar.")
+        else:
+            print("Formato incorrecto, use AAAA-MM-DD.")
+    return fecha  #Sale [año, mes, dia]
+
+def dias_en_mes(anio, mes):
+    dias_mes = [31, 29 if bisiesto(anio) else 28, 31, 30, 31, 30,
+                31, 31, 30, 31, 30, 31]
+    return dias_mes[mes - 1]
+
+
+def contar_dias(fecha):
+    anio, mes, dia = fecha
+    for a in range(1, anio):
+        dias += 366 if bisiesto(a) else 365
+        for m in range(1, mes):
+            dias += dias_en_mes(anio, m)
         
+        dias += dia
+        return dias
+
+def diferencia_dias_entre(check_in, check_out):
+    return contar_dias(check_out) - contar_dias(check_in)
+
 def llenar_reservas(matriz):
     nro_dni= int(input("Ingrese el número de dni del cliente: (-1 para salir): "))
     while nro_dni != -1:
+
         cant_pax = int(input("Ingrese la cantidad de pasajeros: "))
-        checkin_str = input("Ingrese fecha inicio (AAAA-MM-DD): ")
-    
-        checkout_str = input("Ingrese fecha final (AAAA-MM-DD): ")
+#CHECK-IN Y CHECK-OUT ------------------------------------------------------------------------------------------------------
+        check_in = pedir_fecha("Ingrese fecha inicio (AAAA-MM-DD): ")
+        check_out = pedir_fecha("Ingrese fecha final (AAAA-MM-DD): ")
+        while not verificar_egreso(check_in, check_out):
+            print("El egreso debe ser posterior al ingreso.")
+            check_out = pedir_fecha("Reingrese fecha fin (AAAA-MM-DD): ")
+
+        dias = diferencia_dias_entre(check_in, check_out)
+        if dias > 31:
+            continuar = int(input("Cantidad de días mayor a 31, desea continuar? 1 - Si | 2 - No "))
+            while continuar != 1 or continuar != 2:
+                print("Se debe ingresar 1 o 2.")
+                continuar = int(input("Cantidad de días mayor a 31, desea continuar? 1 - Si | 2 - No "))
+            if continuar == 1:
+                pass
+            if continuar == 2:
+                pass 
+
         total = int(input("Ingrese el total: "))
+        nro_reserva = len(matriz) + 1
 
-        nro_reserva = matriz(len(matriz)) + 1
-        check_in = definir_fechas(checkin_str)
-        check_out = definir_fechas(checkout_str)
 
-        ver = verificar_dias(check_in, check_out)
-        if ver == 1:
-            print("La fecha de terminación no puede ser anterior a la de inicio.")
-        elif ver == 2:
-            ver_fecha_larga = int(input("Se ingreso una fecha muy larga, desea continuar? ( 1 -  Si |  2 - No )"))
-            while ver_fecha_larga != 1 or ver_fecha_larga != 2:
-                ver_fecha_larga = int(input("Se ingreso una fecha muy larga, desea continuar? ( 1 -  Si |  2 - No )"))
-                
-                if ver_fecha_larga == 1:
-                    #matriz.append([nro_reserva])
-                    pass
-                if ver_fecha_larga == 2:
-                    nro_dni= int(input("Ingrese el número de dni del cliente: (-1 para salir): "))
-        elif ver == 0:
-            matriz.append([nro_reserva, nro_dni, cant_pax, check_in, check_out, total])
-            nro_dni= int(input("Ingrese el número de dni del cliente: (-1 para salir): "))
-
-def verificar_dias(checkin,checkout):
-    dias = checkout - checkin
-    if dias < 0:
-        return 1
-    elif dias > 60:
-        return 2
-    else:
-        return 0
 def print_reservas(matriz):
     print("NroReserva|DNI       |Pax       |Desde     |Hasta     |Total     |")
     for i in range(len(matriz)):
@@ -74,3 +117,5 @@ def print_reservas(matriz):
             print(f'{matriz[i][j]}'.center(10," "), end='')
         print()
     return matriz
+
+
