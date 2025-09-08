@@ -3,7 +3,7 @@ from hotel.clientes import *
 from hotel.habitaciones import *
 from hotel.reservas import *
 from hotel.login import *
-
+from hotel.estadisticas import  mostrar_estadisticas
 def ubicar(matriz, item): #INDEX
     flag=0
     i=0
@@ -17,11 +17,14 @@ def ubicar(matriz, item): #INDEX
             flag=1
     return pos
 
+mostrar_estadisticas()
+
 #menú
 print("----Sistema de Gestión Hotelera----")
 print("" "\n",
 "1-Gestionar habitaciones", "\n", \
 "2-Reservas", "\n", \
+"3-Ver Estadisticas", "\n", \
 "Salir del programa con -1")
 opcion=int(input("Ingrese numéricamente la opción deseada: "))
 
@@ -100,8 +103,13 @@ Volver para atrás con -1')
 Volver para atrás con -1')
             opcion_reservas=int(input("Ingrese numéricamente la opción deseada: "))
 
+    elif opcion==3:
+        habitaciones.append("Puto")
+        print_habitaciones(habitaciones)
+        mostrar_habitacion()
     print(f'\n\
 1-Gestionar habitaciones\n\
 2-Reservas\n\
 Salir del programa con -1')
     opcion=int(input("Ingrese numéricamente la opción deseada: "))
+
