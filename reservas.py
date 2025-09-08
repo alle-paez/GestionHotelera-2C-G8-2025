@@ -15,7 +15,7 @@ reservas = [
     - falta el precio por noche, tiene que estar cargado en la lista habitaciones.
      """
 
-
+#Validaciones de fecha ----------------------------------------------------------------------------------------
 def verificar_formato_fecha(fecha):
     formato = r"^\d{4}-\d{2}-\d{2}$"
     if re.match(formato, fecha):
@@ -40,7 +40,6 @@ def verificar_ingresos_fecha(fecha):
 
     if fecha[2] < 1 or fecha[2] > dias_en_mes(fecha[0], fecha[1]):
         return False
-    
     return True
     
 def verificar_egreso(check_in, check_out):
@@ -68,7 +67,6 @@ def dias_en_mes(anio, mes):
                 31, 31, 30, 31, 30, 31]
     return dias_mes[mes - 1]
 
-
 def contar_dias(fecha):
     anio, mes, dia = fecha
     for a in range(1, anio):
@@ -82,12 +80,31 @@ def contar_dias(fecha):
 def diferencia_dias_entre(check_in, check_out):
     return contar_dias(check_out) - contar_dias(check_in)
 
+#VERIFICACIONES CLIENTE --------------------------------------------------------------------------------------
+
+def verificar_formato(dni):
+    patron = '^\d{8}$'
+    if re.match(patron, dni):
+        return True
+    else: 
+        return False
+
+
+#LLENAR RESERVAS ---------------------------------------------------------------------------------------------
 def llenar_reservas(matriz):
     nro_dni= int(input("Ingrese el número de dni del cliente: (-1 para salir): "))
+    
     while nro_dni != -1:
+        nro_dni_str = str(nro_dni)
+        ver_dni = verificar_formato(nro_dni_str)
+        while not ver_dni:
+            print("Se ingreso un dni Invalido.")
+            nro_dni= int(input("Ingrese el número de dni del cliente: (-1 para salir): "))
+            nro_dni_str = str(nro_dni)
+            ver_dni = verificar_formato(nro_dni_str)
 
         cant_pax = int(input("Ingrese la cantidad de pasajeros: "))
-#CHECK-IN Y CHECK-OUT ------------------------------------------------------------------------------------------------------
+    #check-in y check-out -------------------------------------------
         check_in = pedir_fecha("Ingrese fecha inicio (AAAA-MM-DD): ")
         check_out = pedir_fecha("Ingrese fecha final (AAAA-MM-DD): ")
         while not verificar_egreso(check_in, check_out):
