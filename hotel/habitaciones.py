@@ -1,4 +1,3 @@
-from listas_codeadas import *
 
 def print_habitaciones(matriz):
     print("Número    |Precio    |Tipo      |Capacidad |Estado    |")

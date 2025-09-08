@@ -1,4 +1,3 @@
-from listas_codeadas import * 
 
 def llenar_habitaciones(matriz):
 

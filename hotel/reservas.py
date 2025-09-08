@@ -1,4 +1,3 @@
-from listas_codeadas import *
 
 def llenar_reservas(matriz):
     nro_reserva = int(input("Ingrese el número de reserva (-1 para salir): "))

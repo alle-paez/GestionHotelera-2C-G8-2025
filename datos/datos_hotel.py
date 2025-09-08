@@ -21,21 +21,3 @@ clientes = [
     [29888777, "Sofía", "López", "1145678901", "sofia.lopez@email.com"],
     [31222333, "Martín", "Díaz", "1178901234", "martin.diaz@email.com"]
 ]
-
-def alta_clientes(clientes):
-    dni_cliente = int(input("Ingrese el dni del cliente: (-1 para salir) "))
-    while dni_cliente != -1:
-        if dni_cliente in clientes:
-            print("Se ingreso un cliente ya existente. Por favor, ingrese otro.")
-            dni_cliente = int(input("Ingrese el dni del cliente: (-1 para salir) "))
-        else: 
-            nombre_cliente = input("Ingrese el nombre del cliente: ")
-            apellido_cliente = input("Ingrese el apellido del cliente: ")
-            telefono_cliente = int(input("Ingrese el telefono del cliente: "))
-            mail_cliente = input("Ingrese el mail del cliente: ")
-
-            clientes.append([dni_cliente, nombre_cliente, apellido_cliente, telefono_cliente, mail_cliente])
-            dni_cliente = int(input("Ingrese el dni del cliente: (-1 para salir) "))
-
-
-
